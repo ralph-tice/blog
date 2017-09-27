@@ -9,8 +9,11 @@ lazy val blog =
     .settings(settings)
     .settings(
       libraryDependencies ++= Seq(
-        library.scalaCheck % Test,
-        library.scalaTest  % Test
+        library.akkaActor,
+        library.akkaTyped,
+        library.akkaTestkit      % Test,
+        library.akkaTypedTestkit % Test,
+        library.scalaTest        % Test
       )
     )
 
@@ -21,11 +24,15 @@ lazy val blog =
 lazy val library =
   new {
     object Version {
+      val akka       = "2.5.6"
       val scalaCheck = "1.13.5"
       val scalaTest  = "3.0.4"
     }
-    val scalaCheck = "org.scalacheck" %% "scalacheck" % Version.scalaCheck
-    val scalaTest  = "org.scalatest"  %% "scalatest"  % Version.scalaTest
+    val akkaActor        = "com.typesafe.akka" %% "akka-actor"         % Version.akka
+    val akkaTestkit      = "com.typesafe.akka" %% "akka-testkit"       % Version.akka
+    val akkaTyped        = "com.typesafe.akka" %% "akka-typed"         % Version.akka
+    val akkaTypedTestkit = "com.typesafe.akka" %% "akka-typed-testkit" % Version.akka
+    val scalaTest        = "org.scalatest"     %% "scalatest"          % Version.scalaTest
   }
 
 // *****************************************************************************
@@ -65,5 +72,5 @@ lazy val scalafmtSettings =
   Seq(
     scalafmtOnCompile := true,
     scalafmtOnCompile.in(Sbt) := false,
-    scalafmtVersion := "1.2.0"
+    scalafmtVersion := "1.3.0"
   )
